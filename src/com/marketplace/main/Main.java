@@ -1,6 +1,6 @@
 package com.marketplace.main;
 
-import com.marketplace.login.controller.LoginController;
+import com.marketplace.controller.LoginController;
 import com.marketplace.view.Login;
 
 public class Main {

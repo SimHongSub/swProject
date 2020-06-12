@@ -1,4 +1,4 @@
-package com.marketplace.login.controller;
+package com.marketplace.controller;
 
 import com.marketplace.view.Login;
 
