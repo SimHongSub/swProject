@@ -40,7 +40,7 @@ public class FileProcessing {
 					while((line = br.readLine()) != null && !line.equals("")) {
 						String[] pieces = line.split(":");
 						
-						User user = new User(pieces[0], pieces[1], pieces[2], pieces[3], pieces[4], pieces[5]);
+						User user = new User(pieces[0], pieces[1], pieces[2], pieces[3], pieces[4], pieces[5], pieces[6]);
 						
 						list.add(user);
 					}
@@ -140,7 +140,7 @@ public class FileProcessing {
 			for(int i=0;i<list.size();i++) {
 				User user = list.get(i);
 				
-				bw.write(user.getId() + ":" + user.getPassword() + ":" + user.getName() + ":" + user.getPhoneNumber() + ":" + user.getEmail() + ":" + user.getAuthority() + "\n");
+				bw.write(user.getId() + ":" + user.getPassword() + ":" + user.getName() + ":" + user.getPhoneNumber() + ":" + user.getEmail() + ":" + user.getAuthority() + ":" + user.getState() + "\n");
 			}
 			
 			bw.close();

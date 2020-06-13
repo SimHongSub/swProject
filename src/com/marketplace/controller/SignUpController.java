@@ -32,7 +32,7 @@ public class SignUpController {
 			result.put("message", "모든 정보를 입력하셔야 합니다.");
 		}else {
 			
-			User user = new User(id, password, name, phoneNumber, email, "GENERAL");
+			User user = new User(id, password, name, phoneNumber, email, "GENERAL", "activated");
 			
 			userList.add(user);
 			
