@@ -6,9 +6,20 @@ public class Book {
 	private String author;
 	private String publisher;
 	private String date;
-	private int price;
 	private String state;
+	private String price;
 	private String userId;
+	
+	public Book(String isbn, String title, String author, String publisher, String date, String state, String price, String userId) {
+		this.isbn = isbn;
+		this.title = title;
+		this.author = author;
+		this.publisher = publisher;
+		this.date = date;
+		this.state = state;
+		this.price = price;
+		this.userId = userId;
+	}
 	
 	public String getIsbn() {
 		return isbn;
@@ -40,10 +51,10 @@ public class Book {
 	public void setDate(String date) {
 		this.date = date;
 	}
-	public int getPrice() {
+	public String getPrice() {
 		return price;
 	}
-	public void setPrice(int price) {
+	public void setPrice(String price) {
 		this.price = price;
 	}
 	public String getState() {
