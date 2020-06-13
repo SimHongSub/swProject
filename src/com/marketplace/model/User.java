@@ -7,14 +7,16 @@ public class User {
 	private String phoneNumber;
 	private String email;
 	private String authority;
+	private String state;
 	
-	public User(String id, String password, String name, String phoneNumber, String email, String authority) {
+	public User(String id, String password, String name, String phoneNumber, String email, String authority, String state) {
 		this.id = id;
 		this.password = password;
 		this.name = name;
 		this.phoneNumber = phoneNumber;
 		this.email = email;
 		this.authority = authority;
+		this.state = state;
 	}
 	
 	public String getId() {
@@ -54,6 +56,14 @@ public class User {
 
 	public void setAuthority(String authority) {
 		this.authority = authority;
+	}
+
+	public String getState() {
+		return state;
+	}
+
+	public void setState(String state) {
+		this.state = state;
 	}
 
 }
