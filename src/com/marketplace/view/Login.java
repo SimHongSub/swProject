@@ -3,16 +3,19 @@ package com.marketplace.view;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.HashMap;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import javax.swing.WindowConstants;
 
 import com.marketplace.controller.LoginController;
+import com.marketplace.controller.MainController;
 import com.marketplace.controller.SignUpController;
 
 public class Login {
@@ -46,10 +49,19 @@ public class Login {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
+				HashMap<String, String> result = new HashMap<String, String>();
 				LoginController loginController = new LoginController();
 				
-				loginController.loginCheck();
+				result = loginController.loginCheck(idText.getText(), pwText.getPassword());
 				
+				if(result.get("message").equals("success")) {
+					MainController mainController = new MainController();
+					
+					frm.dispose();
+					mainController.showview();
+				}else {
+					JOptionPane.showMessageDialog(frm, result.get("message"), "Message", JOptionPane.INFORMATION_MESSAGE, null);
+				}
 			}
 		});
 		
