@@ -12,6 +12,8 @@ import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import javax.swing.WindowConstants;
 
+import com.marketplace.controller.LoginController;
+
 public class SignUp {
 	
 	public void show() {
@@ -19,7 +21,7 @@ public class SignUp {
 		JFrame frm = new JFrame("회원가입");
 		
 		//frame 사이즈, 화면상 위치 설정
-		frm.setSize(300, 150);
+		frm.setSize(300, 200);
 		frm.setLocationRelativeTo(null);
 		
 		//frame layout설정
@@ -30,24 +32,27 @@ public class SignUp {
 		JTextField idText = new JTextField();
 		
 		JLabel pwLabel = new JLabel("비밀번호", SwingConstants.RIGHT);
-		JPasswordField pwText = new JPasswordField(10);
+		JPasswordField pwText = new JPasswordField();
 		pwText.setEchoChar('*');
 		
 		JLabel nameLabel = new JLabel("이름", SwingConstants.RIGHT);
-		JTextField nameText = new JTextField(10);
+		JTextField nameText = new JTextField();
 		
 		JLabel phoneNumberLabel = new JLabel("전화번호", SwingConstants.RIGHT);
-		JTextField phoneNumberText = new JTextField(10);
+		JTextField phoneNumberText = new JTextField();
 		
 		JLabel emailLabel = new JLabel("이메일", SwingConstants.RIGHT);
-		JTextField emailText = new JTextField(10);
+		JTextField emailText = new JTextField();
 		
 		JButton confirmBtn = new JButton("확인");
 		confirmBtn.addActionListener(new ActionListener() {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
+				LoginController loginController = new LoginController();
 				
+				frm.dispose();
+				loginController.showView();
 			}
 		});
 		
