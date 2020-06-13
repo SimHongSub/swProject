@@ -3,24 +3,18 @@ package com.marketplace.controller;
 import com.marketplace.view.Login;
 
 public class LoginController {
-	
-	private static Login view = new Login();
+	private Login view;
 	
 	public LoginController() {
-		
+		view = new Login();
 	}
 	
-	public static void showView() {
+	public void showView() {
 		view.show();
 	}
 	
-	public static void loginClick() {
+	public void loginCheck() {
 		
-	}
-	
-	public static void signUpClick() {
-		view.close();
-		SignUpController.showView();
 	}
 
 }
