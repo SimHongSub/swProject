@@ -7,6 +7,8 @@ public class Book {
 	private String publisher;
 	private String date;
 	private int price;
+	private String state;
+	private String userId;
 	
 	public String getIsbn() {
 		return isbn;
@@ -50,6 +52,10 @@ public class Book {
 	public void setState(String state) {
 		this.state = state;
 	}
-	private String state;
-
+	public String getUserId() {
+		return userId;
+	}
+	public void setUserId(String userId) {
+		this.userId = userId;
+	}
 }
