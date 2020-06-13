@@ -1,9 +1,11 @@
 package com.marketplace.filesystem;
 
+import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -20,25 +22,37 @@ import com.marketplace.model.User;
  */
 public class FileProcessing {
 	/**
-	 * filePath - String variable to save c source file path.
-	 * fileStream - FileInputStream to read file.
+	 * Return fileContents after read c source file and save the content.
+	 * 
+	 * @return fileContents
+	 * @throws IOException 
+	 * @exception FileInputStream Exception.
 	 */
-	//private String filePath = null;
-	//private FileInputStream fileStream = null;
-	
-	/*public FileProcessing(String filePath) {
-		this.filePath = filePath;
-		try {
-			this.fileStream = new FileInputStream(this.filePath);
-		} catch (FileNotFoundException e) {
-			
-			e.printStackTrace();
+	public void readUserFile(String filePath, ArrayList<User> list) {
+		File file = new File(filePath);
+		
+		if(file.exists()) {
+			try {
+				BufferedReader br = new BufferedReader(new FileReader(file));
+				String line = null;
+				
+				try {
+					while((line = br.readLine()) != null && !line.equals("")) {
+						String[] pieces = line.split(":");
+						
+						User user = new User(pieces[0], pieces[1], pieces[2], pieces[3], pieces[4], pieces[5]);
+						
+						list.add(user);
+					}
+				} catch (IOException e) {
+					
+					e.printStackTrace();
+				}
+			} catch (FileNotFoundException e) {
+				
+				e.printStackTrace();
+			}
 		}
-		
-	}*/
-	
-	public FileProcessing() {
-		
 	}
 	
 	/**
@@ -48,7 +62,41 @@ public class FileProcessing {
 	 * @throws IOException 
 	 * @exception FileInputStream Exception.
 	 */
-	public String readFile(String filePath) {
+	public void readBookFile(String filePath, ArrayList<Book> list) {
+		File file = new File(filePath);
+		
+		if(file.exists()) {
+			try {
+				BufferedReader inFile = new BufferedReader(new FileReader(file));
+				String sLine = null;
+				
+				try {
+					while((sLine = inFile.readLine()) != null) {
+						String[] pieces = sLine.split(":");
+						
+						Book book = new Book(pieces[0], pieces[1], pieces[2], pieces[3], pieces[4], pieces[5], pieces[6], pieces[7]);
+						
+						list.add(book);
+					}
+				} catch (IOException e) {
+					
+					e.printStackTrace();
+				}
+			} catch (FileNotFoundException e) {
+				
+				e.printStackTrace();
+			}
+		}
+	}
+	
+	/**
+	 * Return fileContents after read c source file and save the content.
+	 * 
+	 * @return fileContents
+	 * @throws IOException 
+	 * @exception FileInputStream Exception.
+	 */
+	/*public String readFile(String filePath) {
 		String fileContents = "";
 		FileInputStream fileStream = null;
 		
@@ -74,7 +122,7 @@ public class FileProcessing {
 			
 			return e.getMessage();
 		}
-	}
+	}*/
 	
 	/**
 	 * The method to write user info to file.
@@ -92,7 +140,7 @@ public class FileProcessing {
 			for(int i=0;i<list.size();i++) {
 				User user = list.get(i);
 				
-				bw.write(user.getId() + " : " + user.getPassword() + " : " + user.getName() + " : " + user.getPhoneNumber() + " : " + user.getEmail() + "\n");
+				bw.write(user.getId() + ":" + user.getPassword() + ":" + user.getName() + ":" + user.getPhoneNumber() + ":" + user.getEmail() + ":" + user.getAuthority() + "\n");
 			}
 			
 			bw.close();
@@ -117,7 +165,7 @@ public class FileProcessing {
 			for(int i=0;i<list.size();i++) {
 				Book book = list.get(i);
 				
-				bw.write(book.getIsbn() + " : " + book.getTitle() + " : " + book.getAuthor() + " : " + book.getPublisher() + " : " + book.getDate() + " : " + book.getPrice() + " : " + book.getState() + "\n");
+				bw.write(book.getIsbn() + ":" + book.getTitle() + ":" + book.getAuthor() + ":" + book.getPublisher() + ":" + book.getDate() + ":" + book.getPrice() + ":" + book.getState() + ":" + book.getUserId() + "\n");
 			}
 			
 			bw.close();
@@ -125,4 +173,10 @@ public class FileProcessing {
 			e.printStackTrace();
 		}
 	}
+	
+	/*private void parsing(String line) {
+		String[] pieces = line.split(":");
+		
+		return pieces
+	}*/
 }
