@@ -8,6 +8,7 @@ import javax.naming.spi.DirStateFactory.Result;
 import javax.swing.JOptionPane;
 
 import com.marketplace.filesystem.FileProcessing;
+import com.marketplace.main.MarketPlace;
 import com.marketplace.model.User;
 import com.marketplace.view.Login;
 
@@ -37,6 +38,8 @@ public class LoginController {
 			if(id.equals(user.getId())){
 				if(user.getPassword().equals(new String(pw))) {
 					result.put("message", "success");
+					
+					MarketPlace.my = user;
 					
 					return result;
 				}else {
