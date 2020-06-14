@@ -1,15 +1,14 @@
 package com.marketplace.controller;
 
+import java.io.UnsupportedEncodingException;
+import java.security.GeneralSecurityException;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
-
-import javax.naming.spi.DirStateFactory.Result;
-import javax.swing.JOptionPane;
 
 import com.marketplace.filesystem.FileProcessing;
 import com.marketplace.main.MarketPlace;
 import com.marketplace.model.User;
+import com.marketplace.util.AES256Util;
 import com.marketplace.view.Login;
 
 public class LoginController {
@@ -34,9 +33,24 @@ public class LoginController {
 		
 		for(int i=0; i<userList.size(); i++) {
 			User user = userList.get(i);
+			String decryptedPassword = null;
 			
 			if(id.equals(user.getId())){
-				if(user.getPassword().equals(new String(pw))) {
+				try {
+					AES256Util aesUtil = new AES256Util();
+					
+					try {
+						decryptedPassword = aesUtil.decrypt(user.getPassword());
+					} catch (GeneralSecurityException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+				} catch (UnsupportedEncodingException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				
+				if(decryptedPassword.equals(new String(pw))) {
 					result.put("message", "success");
 					
 					MarketPlace.my = user;
