@@ -1,39 +1,34 @@
 package com.marketplace.view;
 
 import java.awt.BorderLayout;
-import java.awt.Component;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
-import java.util.HashMap;
 
-import javax.swing.AbstractCellEditor;
 import javax.swing.JButton;
+import javax.swing.JComboBox;
 import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-import javax.swing.JPasswordField;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
-import javax.swing.SwingConstants;
+import javax.swing.WindowConstants;
 import javax.swing.table.DefaultTableModel;
-import javax.swing.table.TableCellEditor;
-import javax.swing.table.TableCellRenderer;
 
 import com.marketplace.controller.AdminController;
+import com.marketplace.controller.GeneralController;
 import com.marketplace.controller.MainController;
-import com.marketplace.filesystem.FileProcessing;
 import com.marketplace.main.MarketPlace;
 import com.marketplace.model.Book;
+import com.marketplace.view.table.MainTableCell;
 
 public class Main {
+	//메인 페이지 frame
 	private JFrame frm;
 	
 	public Main() {
-		frm = new JFrame("헌책 장터 시스템");
+		frm = new JFrame("헌책 장터 시스템 - 메인 페이지");
 	}
 
 	public void show(ArrayList<Book> list) {
@@ -50,8 +45,10 @@ public class Main {
 		
 		JTable table = new JTable(model);
 		
-		table.getColumnModel().getColumn(8).setCellRenderer(new TableCell(table));
-		table.getColumnModel().getColumn(8).setCellEditor(new TableCell(table));
+		table.getColumnModel().getColumn(8).setCellRenderer(new MainTableCell(table, frm));
+		table.getColumnModel().getColumn(8).setCellEditor(new MainTableCell(table, frm));
+		
+		table.setRowHeight(30);
 		
 		JScrollPane scrollPane = new JScrollPane(table);
 		
@@ -62,11 +59,34 @@ public class Main {
 		//frame layout설정
 		frm.setLayout(new BorderLayout());
 		
-
+		//panel 초기화
 		JPanel northPanel = new JPanel();
-		//northPanel.setLayout(mgr);
+		northPanel.setLayout(new GridLayout(1,4));
+
+		String items[] = {"ISBN번호", "제목", "저자", "판매자ID"};
+		JComboBox<String> searchBox = new JComboBox<String>(items);
+		
+		JTextField searchText = new JTextField();
+		
+		northPanel.add(searchBox);
+		northPanel.add(searchText);
 		
 		JButton searchBtn = new JButton("검색");
+		searchBtn.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				MainController mainController = new MainController();
+				
+				if(!searchText.getText().equals("")) {
+					frm.dispose();
+					mainController.search(searchBox.getSelectedItem().toString(), searchText.getText());	
+				}else {
+					frm.dispose();
+					mainController.showView();
+				}
+			}
+		});
 		
 		northPanel.add(searchBtn);
 		
@@ -86,6 +106,16 @@ public class Main {
 			northPanel.add(adminBtn);
 		}else {
 			JButton myBtn = new JButton("My Book");
+			myBtn.addActionListener(new ActionListener() {
+				
+				@Override
+				public void actionPerformed(ActionEvent e) {
+					GeneralController generalController = new GeneralController();
+					
+					frm.dispose();
+					generalController.showView();
+				}
+			});
 			northPanel.add(myBtn);
 		}
 		
@@ -93,46 +123,8 @@ public class Main {
 		frm.add(scrollPane);
 		
 		frm.setVisible(true);
+		
+		//x박스 클릭 action
+		frm.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
 	}
-	
-	@SuppressWarnings("serial")
-	class TableCell extends AbstractCellEditor implements TableCellEditor, TableCellRenderer {
-        JButton purchaseBtn;
- 
-        public TableCell(JTable table) {
-        	purchaseBtn = new JButton("구입");
-        	
-        	purchaseBtn.addActionListener(new ActionListener() {
-				
-				@Override
-				public void actionPerformed(ActionEvent e) {
-					HashMap<String, String> result = new HashMap<String, String>();
-					MainController mainController = new MainController();
-					
-					result = mainController.purchase(table.getSelectedRow());
-					
-					JOptionPane.showMessageDialog(frm, result.get("message"), "Message", JOptionPane.INFORMATION_MESSAGE, null);
-				}
-			});
-        }
- 
-        @Override
-        public Object getCellEditorValue() {
-            return null;
-        }
- 
-        @Override
-        public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus,
-                int row, int column) {
-
-            return purchaseBtn;
-        }
- 
-        @Override
-        public Component getTableCellEditorComponent(JTable table, Object value, boolean isSelected, int row,
-                int column) {
-
-            return purchaseBtn;
-        }
-    }
 }
