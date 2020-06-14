@@ -4,9 +4,9 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 import com.marketplace.filesystem.FileProcessing;
-import com.marketplace.main.MarketPlace;
 import com.marketplace.model.Book;
 import com.marketplace.model.User;
+import com.marketplace.util.EmailUtil;
 import com.marketplace.view.Main;
 
 public class MainController {
@@ -26,8 +26,50 @@ public class MainController {
 		fp.readUserFile("userInfo", userList);
 	}
 	
-	public void showview() {
+	public void showView() {
 		view.show(bookList);
+	}
+	
+	public void search(String searchItem, String searchText) {
+		ArrayList<Book> searchBooks = new ArrayList<Book>();
+		
+		if(searchItem.equals("ISBN번호")){
+			for(int i=0; i<bookList.size(); i++) {
+				Book book = bookList.get(i);
+				
+				if(book.getIsbn().equals(searchText)) {
+					searchBooks.add(book);
+					
+					break;
+				}
+			}
+		}else if(searchItem.equals("제목")) {
+			for(int i=0; i<bookList.size(); i++) {
+				Book book = bookList.get(i);
+				
+				if(book.getTitle().contains(searchText)) {
+					searchBooks.add(book);
+				}
+			}
+		}else if(searchItem.equals("저자")) {
+			for(int i=0; i<bookList.size(); i++) {
+				Book book = bookList.get(i);
+				
+				if(book.getAuthor().equals(searchText)) {
+					searchBooks.add(book);
+				}
+			}
+		}else {
+			for(int i=0; i<bookList.size(); i++) {
+				Book book = bookList.get(i);
+				
+				if(book.getUserId().equals(searchText)) {
+					searchBooks.add(book);
+				}
+			}
+		}
+		
+		view.show(searchBooks);
 	}
 	
 	public HashMap<String, String> purchase(int index){
@@ -47,9 +89,16 @@ public class MainController {
 			}
 		}
 		
-		result.put("message", "구매자 " + MarketPlace.my.getId() + " E-mail : " + MarketPlace.my.getEmail() + "\n"
-				+ "판매자 " + sellerId + " E-mail : " + sellerEmail + "\n메일이 발송되었습니다.");
+		EmailUtil emailUtil = new EmailUtil();
+		
+		result.put("message", emailUtil.send(sellerId, sellerEmail));
 		
 		return result;
+	}
+	
+	public void delete(int index) {
+		bookList.remove(index);
+		
+		fp.writeBookFile(bookList, "bookInfo");
 	}
 }
