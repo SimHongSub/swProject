@@ -165,7 +165,7 @@ public class FileProcessing {
 			for(int i=0;i<list.size();i++) {
 				Book book = list.get(i);
 				
-				bw.write(book.getIsbn() + ":" + book.getTitle() + ":" + book.getAuthor() + ":" + book.getPublisher() + ":" + book.getDate() + ":" + book.getPrice() + ":" + book.getState() + ":" + book.getUserId() + "\n");
+				bw.write(book.getIsbn() + ":" + book.getTitle() + ":" + book.getAuthor() + ":" + book.getPublisher() + ":" + book.getDate() + ":" + book.getState() + ":" + book.getPrice() + ":" + book.getUserId() + "\n");
 			}
 			
 			bw.close();
