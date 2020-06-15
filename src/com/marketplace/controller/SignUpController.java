@@ -32,6 +32,16 @@ public class SignUpController {
 			result.put("message", "모든 정보를 입력하셔야 합니다.");
 		}else {
 			
+			for(int i=0; i<userList.size(); i++) {
+				User user = userList.get(i);
+				
+				if(user.getId().equals(id)) {
+					result.put("message", "이미 존재하는 아이디입니다.");
+					
+					return result;
+				}
+			}
+			
 			User user = new User(id, password, name, phoneNumber, email, "GENERAL", "activated");
 			
 			userList.add(user);
