@@ -19,6 +19,7 @@ import com.marketplace.controller.MainController;
 import com.marketplace.controller.SignUpController;
 
 public class Login {
+	//로그인 frame
 	private JFrame frm;
 	
 	public Login() {
@@ -26,9 +27,6 @@ public class Login {
 	}
 
 	public void show() {
-		//로그인 frame 생성
-		//JFrame frm = new JFrame("로그인");
-		
 		//frame 사이즈, 화면상 위치 설정
 		frm.setSize(300, 120);
 		frm.setLocationRelativeTo(null);
@@ -52,13 +50,13 @@ public class Login {
 				HashMap<String, String> result = new HashMap<String, String>();
 				LoginController loginController = new LoginController();
 				
-				result = loginController.loginCheck(idText.getText(), pwText.getPassword());
+				result = loginController.loginCheck(idText.getText(), new String(pwText.getPassword()));
 				
 				if(result.get("message").equals("success")) {
 					MainController mainController = new MainController();
 					
 					frm.dispose();
-					mainController.showview();
+					mainController.showView();
 				}else {
 					JOptionPane.showMessageDialog(frm, result.get("message"), "Message", JOptionPane.INFORMATION_MESSAGE, null);
 				}
