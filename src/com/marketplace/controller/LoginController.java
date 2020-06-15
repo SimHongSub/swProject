@@ -28,7 +28,7 @@ public class LoginController {
 		view.show();
 	}
 	
-	public HashMap<String, String> loginCheck(String id, char[] pw) {
+	public HashMap<String, String> loginCheck(String id, String pw) {
 		HashMap<String, String> result = new HashMap<String, String>();
 		
 		for(int i=0; i<userList.size(); i++) {
@@ -50,12 +50,19 @@ public class LoginController {
 					e.printStackTrace();
 				}
 				
-				if(decryptedPassword.equals(new String(pw))) {
-					result.put("message", "success");
+				if(decryptedPassword.equals(pw)) {
+					if(user.getState().equals("activated")) {
+						result.put("message", "success");
+						
+						MarketPlace.my = user;
+						
+						return result;
+					}else {
+						result.put("message", "관리자로부터 로그인이 제한되었습니다.");
+						
+						return result;
+					}
 					
-					MarketPlace.my = user;
-					
-					return result;
 				}else {
 					result.put("message", "비밀번호를 잘못 입력하셨습니다.");
 					
