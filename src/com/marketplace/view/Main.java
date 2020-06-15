@@ -63,7 +63,7 @@ public class Main {
 		JPanel northPanel = new JPanel();
 		northPanel.setLayout(new GridLayout(1,4));
 
-		String items[] = {"ISBN번호", "제목", "저자", "판매자ID"};
+		String items[] = {"ISBN번호", "제목", "저자", "출판사", "출판년도", "판매자ID"};
 		JComboBox<String> searchBox = new JComboBox<String>(items);
 		
 		JTextField searchText = new JTextField();

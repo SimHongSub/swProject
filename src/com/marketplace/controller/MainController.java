@@ -59,6 +59,22 @@ public class MainController {
 					searchBooks.add(book);
 				}
 			}
+		}else if(searchItem.equals("출판사")) {
+			for(int i=0; i<bookList.size(); i++) {
+				Book book = bookList.get(i);
+				
+				if(book.getPublisher().equals(searchText)) {
+					searchBooks.add(book);
+				}
+			}
+		}else if(searchItem.equals("출판년도")) {
+			for(int i=0; i<bookList.size(); i++) {
+				Book book = bookList.get(i);
+				
+				if(book.getDate().equals(searchText)) {
+					searchBooks.add(book);
+				}
+			}
 		}else {
 			for(int i=0; i<bookList.size(); i++) {
 				Book book = bookList.get(i);
