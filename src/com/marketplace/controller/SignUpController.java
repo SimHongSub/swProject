@@ -1,10 +1,13 @@
 package com.marketplace.controller;
 
+import java.io.UnsupportedEncodingException;
+import java.security.GeneralSecurityException;
 import java.util.ArrayList;
 import java.util.HashMap;
 
 import com.marketplace.filesystem.FileProcessing;
 import com.marketplace.model.User;
+import com.marketplace.util.AES256Util;
 import com.marketplace.view.SignUp;
 
 public class SignUpController {
@@ -42,7 +45,24 @@ public class SignUpController {
 				}
 			}
 			
-			User user = new User(id, password, name, phoneNumber, email, "GENERAL", "activated");
+			//password 암호화
+			String encryptedPassword = null;
+			
+			try {
+				AES256Util aes = new AES256Util();
+				try {
+					encryptedPassword = aes.encrypt(password);
+				} catch (GeneralSecurityException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+				
+			} catch (UnsupportedEncodingException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+			
+			User user = new User(id, encryptedPassword, name, phoneNumber, email, "GENERAL", "activated");
 			
 			userList.add(user);
 			
