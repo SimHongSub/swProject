@@ -3,6 +3,8 @@ package com.marketplace.view;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.UnsupportedEncodingException;
+import java.security.GeneralSecurityException;
 import java.util.HashMap;
 
 import javax.swing.JButton;
@@ -16,12 +18,17 @@ import javax.swing.WindowConstants;
 
 import com.marketplace.controller.LoginController;
 import com.marketplace.controller.SignUpController;
+import com.marketplace.util.AES256Util;
 
 public class SignUp {
+	//회원가입 frame
+	private JFrame frm;
+	
+	public SignUp() {
+		frm = new JFrame("회원가입");
+	}
 	
 	public void show() {
-		//회원가입 frame 생성
-		JFrame frm = new JFrame("회원가입");
 		
 		//frame 사이즈, 화면상 위치 설정
 		frm.setSize(250, 200);
