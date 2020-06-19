@@ -1,5 +1,12 @@
 package com.marketplace.exception;
 
+/** 
+ * Class responsible for admin controller exception.
+ * 
+ * @date 2020.06.10
+ * @author SimHongSub
+ * @version 1.0
+ */
 @SuppressWarnings("serial")
 public class AdminException extends Exception {
 	/**
