@@ -2,12 +2,14 @@ package com.marketplace.test;
 
 import static org.junit.Assert.*;
 
+import java.util.HashMap;
+
 import org.junit.FixMethodOrder;
 import org.junit.Test;
 import org.junit.runners.MethodSorters;
 
 import com.marketplace.controller.AdminController;
-import com.marketplace.model.User;
+import com.marketplace.exception.AdminException;
 
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class AdminControllerTest {
@@ -20,31 +22,49 @@ public class AdminControllerTest {
 	
 	@Test
 	public void test1ShowView() {
-		adminController.showView();
+		try {
+			adminController.showView();
+		} catch (AdminException e) {
+			e.printStackTrace();
+		}
 	}
 	
 	@Test
 	public void test2Select() {
-		assertEquals("unitTest", adminController.select(3).getId());
+		try {
+			assertEquals("unitTest", adminController.select(3).getId());
+		} catch (AdminException e) {
+			e.printStackTrace();
+		}
 	}
 	
 	@Test
 	public void test3Search() {
-		adminController.search("사용자ID", "unitTest");
-	}
-
-	@Test
-	public void test4CheckState() {
-		adminController.checkState(3);
-	}
-	
-	@Test
-	public void test5Modify() {
-		adminController.modify(3);
+		try {
+			adminController.search("사용자ID", "unitTest");
+		} catch (AdminException e) {
+			e.printStackTrace();
+		}
 	}
 	
 	@Test
-	public void test6Delete() {
-		adminController.delete(3);
+	public void test4Modify() {
+		try {
+			adminController.modify(3);
+		} catch (AdminException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	@Test
+	public void test5Delete() {
+		HashMap<String, String> result = new HashMap<String, String>();
+		result.put("message", "success");
+		
+		try {
+			assertEquals(result, adminController.delete(3));
+		} catch (AdminException e) {
+			e.printStackTrace();
+		}
 	}
 }
