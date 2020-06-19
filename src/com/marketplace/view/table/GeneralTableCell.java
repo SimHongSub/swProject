@@ -20,8 +20,16 @@ import javax.swing.table.TableCellEditor;
 import javax.swing.table.TableCellRenderer;
 
 import com.marketplace.controller.GeneralController;
+import com.marketplace.exception.GeneralException;
 import com.marketplace.model.Book;
 
+/** 
+ * Class that creates a button in genetal user page book list table.
+ * 
+ * @date 2020.06.12
+ * @author SimHongSub
+ * @version 1.0
+ */
 @SuppressWarnings("serial")
 public class GeneralTableCell extends AbstractCellEditor implements TableCellEditor, TableCellRenderer  {
 	JButton modifyBtn;
@@ -35,18 +43,21 @@ public class GeneralTableCell extends AbstractCellEditor implements TableCellEdi
 				
 				@Override
 				public void actionPerformed(ActionEvent e) {
-					Book selectedBook;
+					Book selectedBook = null;;
 					GeneralController generalController = new GeneralController();
 					
-					selectedBook = generalController.select(table.getSelectedRow());
+					try {
+						selectedBook = generalController.select(table.getSelectedRow());
+					} catch (GeneralException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
 					
 					JFrame modifyFrm = new JFrame("책 정보 수정");
 					
-					//frame 사이즈, 화면상 위치 설정
 					modifyFrm.setSize(250, 200);
 					modifyFrm.setLocationRelativeTo(null);
 					
-					//frame layout설정
 					modifyFrm.setLayout(new GridLayout(7, 2));
 					
 					JLabel titleLabel = new JLabel("제목", SwingConstants.RIGHT);
@@ -83,14 +94,24 @@ public class GeneralTableCell extends AbstractCellEditor implements TableCellEdi
 							HashMap<String, String> result = new HashMap<String, String>();
 							GeneralController generalController = new GeneralController();
 							
-							result = generalController.modify(table.getSelectedRow(), titleText.getText(), authorText.getText(), publisherText.getText(), dateText.getText(), stateBox.getSelectedItem().toString(), priceText.getText());
+							try {
+								result = generalController.modify(table.getSelectedRow(), titleText.getText(), authorText.getText(), publisherText.getText(), dateText.getText(), stateBox.getSelectedItem().toString(), priceText.getText());
+							} catch (GeneralException e1) {
+								// TODO Auto-generated catch block
+								e1.printStackTrace();
+							}
 						
 							if(result.get("message").equals("success")) {
 								JOptionPane.showMessageDialog(frm, "수정되었습니다.", "Message", JOptionPane.INFORMATION_MESSAGE, null);
 								
 								modifyFrm.dispose();
 								frm.dispose();
-								generalController.showView();
+								try {
+									generalController.showView();
+								} catch (GeneralException e1) {
+									// TODO Auto-generated catch block
+									e1.printStackTrace();
+								}
 							}else {
 								JOptionPane.showMessageDialog(modifyFrm, result.get("message"), "Message", JOptionPane.INFORMATION_MESSAGE, null);
 							}
@@ -130,7 +151,6 @@ public class GeneralTableCell extends AbstractCellEditor implements TableCellEdi
 					
 					modifyFrm.setVisible(true);
 					
-					//x박스 클릭 action
 					modifyFrm.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
 
 				}
@@ -147,10 +167,15 @@ public class GeneralTableCell extends AbstractCellEditor implements TableCellEdi
 					int check =JOptionPane.showConfirmDialog(frm, "정말 삭제하시겠습니까?", "확인", JOptionPane.YES_NO_OPTION);
 					
 					if(check == JOptionPane.YES_OPTION) {
-    					generalController.delete(table.getSelectedRow());
-    					
-    					frm.dispose();
-    					generalController.showView();
+    					try {
+							generalController.delete(table.getSelectedRow());
+							
+	    					frm.dispose();
+	    					generalController.showView();
+						} catch (GeneralException e1) {
+							// TODO Auto-generated catch block
+							e1.printStackTrace();
+						}
     				}
 				}
 			});
