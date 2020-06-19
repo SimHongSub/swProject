@@ -22,9 +22,18 @@ import javax.swing.table.DefaultTableModel;
 
 import com.marketplace.controller.GeneralController;
 import com.marketplace.controller.MainController;
+import com.marketplace.exception.GeneralException;
+import com.marketplace.exception.MainException;
 import com.marketplace.model.Book;
 import com.marketplace.view.table.GeneralTableCell;
 
+/** 
+ * Class responsible for general user page frontend view.
+ * 
+ * @date 2020.06.12
+ * @author SimHongSub
+ * @version 1.0
+ */
 public class General {
 	private JFrame frm;
 	
@@ -33,7 +42,6 @@ public class General {
 	}
 	
 	public void show(ArrayList<Book> list) {
-		// table 초기화
 		String header[] = {"ISBN", "제목", "저자", "출판사", "출판년도", "상태", "가격", "", ""};
 		DefaultTableModel model = new DefaultTableModel(header, 0);
 				
@@ -56,14 +64,11 @@ public class General {
 				
 		JScrollPane scrollPane = new JScrollPane(table);
 				
-		//frame 사이즈, 화면상 위치 설정
 		frm.setSize(1000, 700);
 		frm.setLocationRelativeTo(null);
 						
-		//frame layout설정
 		frm.setLayout(new BorderLayout());
 				
-
 		JPanel northPanel = new JPanel();
 		northPanel.setLayout(new GridLayout(1,4));
 
@@ -84,10 +89,20 @@ public class General {
 				
 				if(!searchText.getText().equals("")) {
 					frm.dispose();
-					generalController.search(searchBox.getSelectedItem().toString(), searchText.getText());	
+					try {
+						generalController.search(searchBox.getSelectedItem().toString(), searchText.getText());
+					} catch (GeneralException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}	
 				}else {
 					frm.dispose();
-					generalController.showView();
+					try {
+						generalController.showView();
+					} catch (GeneralException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
 				}
 			}
 		});
@@ -101,11 +116,9 @@ public class General {
 			public void actionPerformed(ActionEvent e) {
 				JFrame registerFrm = new JFrame("책 등록");
 				
-				//frame 사이즈, 화면상 위치 설정
 				registerFrm.setSize(250, 200);
 				registerFrm.setLocationRelativeTo(null);
 				
-				//frame layout설정
 				registerFrm.setLayout(new GridLayout(7, 2));
 				
 				JLabel titleLabel = new JLabel("제목", SwingConstants.RIGHT);
@@ -135,14 +148,24 @@ public class General {
 						HashMap<String, String> result = new HashMap<String, String>();
 						GeneralController generalController = new GeneralController();
 						
-						result = generalController.register(titleText.getText(), authorText.getText(), publisherText.getText(), dateText.getText(), stateBox.getSelectedItem().toString(), priceText.getText());
+						try {
+							result = generalController.register(titleText.getText(), authorText.getText(), publisherText.getText(), dateText.getText(), stateBox.getSelectedItem().toString(), priceText.getText());
+						} catch (GeneralException e1) {
+							// TODO Auto-generated catch block
+							e1.printStackTrace();
+						}
 					
 						if(result.get("message").equals("success")) {
 							JOptionPane.showMessageDialog(frm, "등록되었습니다.", "Message", JOptionPane.INFORMATION_MESSAGE, null);
 							
 							registerFrm.dispose();
 							frm.dispose();
-							generalController.showView();
+							try {
+								generalController.showView();
+							} catch (GeneralException e1) {
+								// TODO Auto-generated catch block
+								e1.printStackTrace();
+							}
 						}else {
 							JOptionPane.showMessageDialog(registerFrm, result.get("message"), "Message", JOptionPane.INFORMATION_MESSAGE, null);
 						}
@@ -182,7 +205,6 @@ public class General {
 				
 				registerFrm.setVisible(true);
 				
-				//x박스 클릭 action
 				registerFrm.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
 			}
 		});
@@ -195,7 +217,12 @@ public class General {
 				MainController mainController = new MainController();
 						
 				frm.dispose();
-				mainController.showView();
+				try {
+					mainController.showView();
+				} catch (MainException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
 			}
 		});
 				 
@@ -208,7 +235,6 @@ public class General {
 				
 		frm.setVisible(true);
 				
-		//x박스 클릭 action
 		frm.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
 	}
 }
