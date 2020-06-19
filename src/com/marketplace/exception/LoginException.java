@@ -1,7 +1,7 @@
 package com.marketplace.exception;
 
 /** 
- * Class responsible for login exception.
+ * Class responsible for login controller exception.
  * 
  * @date 2020.06.12
  * @author SimHongSub
