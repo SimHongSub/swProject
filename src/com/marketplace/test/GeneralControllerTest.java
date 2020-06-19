@@ -1,12 +1,11 @@
 package com.marketplace.test;
 
-import static org.junit.Assert.*;
-
 import org.junit.FixMethodOrder;
 import org.junit.Test;
 import org.junit.runners.MethodSorters;
 
 import com.marketplace.controller.GeneralController;
+import com.marketplace.exception.GeneralException;
 import com.marketplace.main.MarketPlace;
 import com.marketplace.model.User;
 
@@ -24,26 +23,46 @@ public class GeneralControllerTest {
 	
 	@Test
 	public void test1ShowView() {
-		generalController.showView();
+		try {
+			generalController.showView();
+		} catch (GeneralException e) {
+			e.printStackTrace();
+		}
 	}
 	
 	@Test
 	public void test2Register() {
-		generalController.register("유닛테스트책", "저자", "출판사", "20200613", "Good", "12000");
+		try {
+			generalController.register("유닛테스트책", "저자", "출판사", "20200613", "Good", "12000");
+		} catch (GeneralException e) {
+			e.printStackTrace();
+		}
 	}
 	
 	@Test
 	public void test3Search() {
-		generalController.search("제목", "유닛");
+		try {
+			generalController.search("제목", "유닛");
+		} catch (GeneralException e) {
+			e.printStackTrace();
+		}
 	}
 	
 	@Test
 	public void test4Modify() {
-		generalController.modify(0, "유닛테스트책", "저자", "출판사", "20200613", "Good", "1200");
+		try {
+			generalController.modify(0, "유닛테스트책", "저자", "출판사", "20200613", "Good", "1200");
+		} catch (GeneralException e) {
+			e.printStackTrace();
+		}
 	}
 	
 	@Test
 	public void test5Delete() {
-		generalController.delete(0);
+		try {
+			generalController.delete(0);
+		} catch (GeneralException e) {
+			e.printStackTrace();
+		}
 	}
 }
