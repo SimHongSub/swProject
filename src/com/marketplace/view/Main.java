@@ -19,12 +19,21 @@ import javax.swing.table.DefaultTableModel;
 import com.marketplace.controller.AdminController;
 import com.marketplace.controller.GeneralController;
 import com.marketplace.controller.MainController;
+import com.marketplace.exception.AdminException;
+import com.marketplace.exception.GeneralException;
+import com.marketplace.exception.MainException;
 import com.marketplace.main.MarketPlace;
 import com.marketplace.model.Book;
 import com.marketplace.view.table.MainTableCell;
 
+/** 
+ * Class responsible for main page frontend view.
+ * 
+ * @date 2020.06.12
+ * @author SimHongSub
+ * @version 1.0
+ */
 public class Main {
-	//메인 페이지 frame
 	private JFrame frm;
 	
 	public Main() {
@@ -32,7 +41,6 @@ public class Main {
 	}
 
 	public void show(ArrayList<Book> list) {
-		// table 초기화
 		String header[] = {"ISBN", "제목", "저자", "출판사", "출판년도", "상태", "가격", "판매자", ""};
 		DefaultTableModel model = new DefaultTableModel(header, 0);
 		
@@ -52,14 +60,11 @@ public class Main {
 		
 		JScrollPane scrollPane = new JScrollPane(table);
 		
-		//frame 사이즈, 화면상 위치 설정
 		frm.setSize(1000, 700);
 		frm.setLocationRelativeTo(null);
 				
-		//frame layout설정
 		frm.setLayout(new BorderLayout());
 		
-		//panel 초기화
 		JPanel northPanel = new JPanel();
 		northPanel.setLayout(new GridLayout(1,4));
 
@@ -80,10 +85,20 @@ public class Main {
 				
 				if(!searchText.getText().equals("")) {
 					frm.dispose();
-					mainController.search(searchBox.getSelectedItem().toString(), searchText.getText());	
+					try {
+						mainController.search(searchBox.getSelectedItem().toString(), searchText.getText());
+					} catch (MainException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}	
 				}else {
 					frm.dispose();
-					mainController.showView();
+					try {
+						mainController.showView();
+					} catch (MainException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
 				}
 			}
 		});
@@ -99,7 +114,12 @@ public class Main {
 					AdminController adminController = new AdminController();
 					
 					frm.dispose();
-					adminController.showView();
+					try {
+						adminController.showView();
+					} catch (AdminException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
 				}
 			});
 			
@@ -113,7 +133,12 @@ public class Main {
 					GeneralController generalController = new GeneralController();
 					
 					frm.dispose();
-					generalController.showView();
+					try {
+						generalController.showView();
+					} catch (GeneralException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
 				}
 			});
 			northPanel.add(myBtn);
@@ -124,7 +149,6 @@ public class Main {
 		
 		frm.setVisible(true);
 		
-		//x박스 클릭 action
 		frm.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
 	}
 }
