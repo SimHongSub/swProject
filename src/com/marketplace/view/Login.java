@@ -17,9 +17,18 @@ import javax.swing.WindowConstants;
 import com.marketplace.controller.LoginController;
 import com.marketplace.controller.MainController;
 import com.marketplace.controller.SignUpController;
+import com.marketplace.exception.LoginException;
+import com.marketplace.exception.MainException;
+import com.marketplace.exception.SignUpException;
 
+/** 
+ * Class responsible for login page frontend view.
+ * 
+ * @date 2020.06.12
+ * @author SimHongSub
+ * @version 1.0
+ */
 public class Login {
-	//로그인 frame
 	private JFrame frm;
 	
 	public Login() {
@@ -27,14 +36,11 @@ public class Login {
 	}
 
 	public void show() {
-		//frame 사이즈, 화면상 위치 설정
 		frm.setSize(300, 120);
 		frm.setLocationRelativeTo(null);
 		
-		//frame layout설정
 		frm.setLayout(new GridLayout(3, 2));
 		
-		//component 생성
 		JLabel idLabel = new JLabel("아이디", SwingConstants.RIGHT);
 		JTextField idText = new JTextField();
 		
@@ -50,13 +56,21 @@ public class Login {
 				HashMap<String, String> result = new HashMap<String, String>();
 				LoginController loginController = new LoginController();
 				
-				result = loginController.loginCheck(idText.getText(), new String(pwText.getPassword()));
+				try {
+					result = loginController.loginCheck(idText.getText(), new String(pwText.getPassword()));
+				} catch (LoginException e1) {
+					e1.printStackTrace();
+				}
 				
 				if(result.get("message").equals("success")) {
 					MainController mainController = new MainController();
 					
 					frm.dispose();
-					mainController.showView();
+					try {
+						mainController.showView();
+					} catch (MainException e1) {
+						e1.printStackTrace();
+					}
 				}else {
 					JOptionPane.showMessageDialog(frm, result.get("message"), "Message", JOptionPane.INFORMATION_MESSAGE, null);
 				}
@@ -71,12 +85,15 @@ public class Login {
 				SignUpController signUpController = new SignUpController();
 				
 				frm.dispose();
-				signUpController.showView();
+				try {
+					signUpController.showView();
+				} catch (SignUpException e1) {
+					e1.printStackTrace();
+				}
 				
 			}
 		});
 		
-		//frame에 component 추가
 		frm.add(idLabel); 
 		frm.add(idText);
 		
@@ -88,7 +105,6 @@ public class Login {
 		
 		frm.setVisible(true);
 		
-		//x박스 클릭 action
 		frm.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
 	}
 }
