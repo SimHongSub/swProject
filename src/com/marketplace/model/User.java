@@ -1,6 +1,22 @@
 package com.marketplace.model;
 
+/** 
+ * Model class responsible for save the user information.
+ * 
+ * @date 2020.06.12
+ * @author SimHongSub
+ * @version 1.0
+ */
 public class User {
+	/**
+	 * id - 사용자 ID
+	 * password - 비밀번호
+	 * name - 이름
+	 * phoneNumber - 전화번호
+	 * email - 이메일 주소
+	 * authority - 권한(GENERAL, ADMIN)
+	 * state - 상태(activated, deactivated)
+	 */
 	private String id;
 	private String password;
 	private String name;
