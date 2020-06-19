@@ -9,6 +9,7 @@ import org.junit.Test;
 import org.junit.runners.MethodSorters;
 
 import com.marketplace.controller.LoginController;
+import com.marketplace.exception.LoginException;
 
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class LoginControllerTest {
@@ -21,7 +22,11 @@ public class LoginControllerTest {
 	
 	@Test
 	public void test1ShowView() {
-		loginController.showView();
+		try {
+			loginController.showView();
+		} catch (LoginException e) {
+			e.printStackTrace();
+		}
 	}
 	
 	@Test
@@ -29,7 +34,11 @@ public class LoginControllerTest {
 		HashMap<String, String> result = new HashMap<String, String>();
 		result.put("message", "success");
 		
-		assertEquals(result, loginController.loginCheck("admin", "nayana"));
+		try {
+			assertEquals(result, loginController.loginCheck("admin", "nayana"));
+		} catch (LoginException e) {
+			e.printStackTrace();
+		}
 	}
 
 }
