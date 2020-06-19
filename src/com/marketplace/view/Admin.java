@@ -18,9 +18,18 @@ import javax.swing.table.DefaultTableModel;
 
 import com.marketplace.controller.AdminController;
 import com.marketplace.controller.MainController;
+import com.marketplace.exception.AdminException;
+import com.marketplace.exception.MainException;
 import com.marketplace.model.User;
 import com.marketplace.view.table.AdminTableCell;
 
+/** 
+ * Class responsible for admin page frontend view.
+ * 
+ * @date 2020.06.12
+ * @author SimHongSub
+ * @version 1.0
+ */
 public class Admin {
 	private JFrame frm;
 	
@@ -29,7 +38,6 @@ public class Admin {
 	}
 
 	public void show(ArrayList<User> list) {
-		// table 초기화
 		String header[] = {"ID", "이름", "전화번호", "이메일", "상태", "", ""};
 		DefaultTableModel model = new DefaultTableModel(header, 0);
 		
@@ -52,13 +60,10 @@ public class Admin {
 		
 		JScrollPane scrollPane = new JScrollPane(table);
 		
-		//frame 사이즈, 화면상 위치 설정
 		frm.setSize(1000, 700);
 		frm.setLocationRelativeTo(null);
 				
-		//frame layout설정
 		frm.setLayout(new BorderLayout());
-		
 
 		JPanel northPanel = new JPanel();
 		northPanel.setLayout(new GridLayout(1,4));
@@ -80,10 +85,20 @@ public class Admin {
 				
 				if(!searchText.getText().equals("")) {
 					frm.dispose();
-					adminController.search(searchBox.getSelectedItem().toString(), searchText.getText());	
+					try {
+						adminController.search(searchBox.getSelectedItem().toString(), searchText.getText());
+					} catch (AdminException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}	
 				}else {
 					frm.dispose();
-					adminController.showView();
+					try {
+						adminController.showView();
+					} catch (AdminException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
 				}
 			}
 		});
@@ -98,7 +113,12 @@ public class Admin {
 				MainController mainController = new MainController();
 				
 				frm.dispose();
-				mainController.showView();
+				try {
+					mainController.showView();
+				} catch (MainException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
 			}
 		});
 
@@ -110,7 +130,6 @@ public class Admin {
 		
 		frm.setVisible(true);
 		
-		//x박스 클릭 action
 		frm.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
 	}
 }
