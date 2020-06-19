@@ -14,8 +14,16 @@ import javax.swing.table.TableCellEditor;
 import javax.swing.table.TableCellRenderer;
 
 import com.marketplace.controller.MainController;
+import com.marketplace.exception.MainException;
 import com.marketplace.main.MarketPlace;
 
+/** 
+ * Class that creates a button in main page book list table.
+ * 
+ * @date 2020.06.12
+ * @author SimHongSub
+ * @version 1.0
+ */
 @SuppressWarnings("serial")
 public class MainTableCell extends AbstractCellEditor implements TableCellEditor, TableCellRenderer  {
 	JButton purchaseBtn;
@@ -33,13 +41,15 @@ public class MainTableCell extends AbstractCellEditor implements TableCellEditor
 					int check =JOptionPane.showConfirmDialog(frm, "정말 삭제하시겠습니까?", "확인", JOptionPane.YES_NO_OPTION);
 					
 					if(check == JOptionPane.YES_OPTION) {
-						mainController.delete(table.getSelectedRow());
-						
-						frm.dispose();
-						mainController.showView();
+						try {
+							mainController.delete(table.getSelectedRow());
+							
+							frm.dispose();
+							mainController.showView();
+						} catch (MainException e1) {
+							e1.printStackTrace();
+						}
     				}
-					
-					
 				}
 			});
     	}else {
@@ -52,7 +62,11 @@ public class MainTableCell extends AbstractCellEditor implements TableCellEditor
 					HashMap<String, String> result = new HashMap<String, String>();
 					MainController mainController = new MainController();
 					
-					result = mainController.purchase(table.getSelectedRow());
+					try {
+						result = mainController.purchase(table.getSelectedRow());
+					} catch (MainException e1) {
+						e1.printStackTrace();
+					}
 					
 					JOptionPane.showMessageDialog(frm, result.get("message"), "Message", JOptionPane.INFORMATION_MESSAGE, null);
 				}
