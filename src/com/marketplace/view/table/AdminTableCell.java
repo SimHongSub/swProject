@@ -14,7 +14,15 @@ import javax.swing.table.TableCellEditor;
 import javax.swing.table.TableCellRenderer;
 
 import com.marketplace.controller.AdminController;
+import com.marketplace.exception.AdminException;
 
+/** 
+ * Class that creates a button in admin page user list table.
+ * 
+ * @date 2020.06.12
+ * @author SimHongSub
+ * @version 1.0
+ */
 @SuppressWarnings("serial")
 public class AdminTableCell extends AbstractCellEditor implements TableCellEditor, TableCellRenderer  {
 	JButton deleteBtn;
@@ -30,21 +38,30 @@ public class AdminTableCell extends AbstractCellEditor implements TableCellEdito
 					HashMap<String, String> result = new HashMap<String, String>();
 					AdminController adminController = new AdminController();
 					
-					result = adminController.checkState(table.getSelectedRow());
+					int check =JOptionPane.showConfirmDialog(frm, "정말 삭제하시겠습니까?", "확인", JOptionPane.YES_NO_OPTION);
 					
-					if(result.get("message").equals("success")) {
-						int check =JOptionPane.showConfirmDialog(frm, "정말 삭제하시겠습니까?", "확인", JOptionPane.YES_NO_OPTION);
-    					
-    					if(check == JOptionPane.YES_OPTION) {
-    						adminController.delete(table.getSelectedRow());
-    						
-    						frm.dispose();
-    						adminController.showView();
-        				}
-					}else {
+					if(check == JOptionPane.YES_OPTION) {
+						try {
+							result = adminController.delete(table.getSelectedRow());
+						} catch (AdminException e1) {
+							// TODO Auto-generated catch block
+							e1.printStackTrace();
+						}
 						
-						JOptionPane.showMessageDialog(frm, "사용자가 activated 상태입니다.", "Message", JOptionPane.INFORMATION_MESSAGE, null);
-					}
+						if(result.get("message").equals("success")) {
+							JOptionPane.showMessageDialog(frm, "삭제되었습니다.", "Message", JOptionPane.INFORMATION_MESSAGE, null);
+							
+							frm.dispose();
+							try {
+								adminController.showView();
+							} catch (AdminException e1) {
+								// TODO Auto-generated catch block
+								e1.printStackTrace();
+							}
+						}else {
+							JOptionPane.showMessageDialog(frm, "사용자가 activated 상태입니다.", "Message", JOptionPane.INFORMATION_MESSAGE, null);
+						}
+    				}
 				}
 			});
     	}else {
@@ -54,12 +71,22 @@ public class AdminTableCell extends AbstractCellEditor implements TableCellEdito
 				@Override
 				public void actionPerformed(ActionEvent e) {
 					AdminController adminController = new AdminController();
-					adminController.modify(table.getSelectedRow());
+					try {
+						adminController.modify(table.getSelectedRow());
+					} catch (AdminException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
 					
 					JOptionPane.showMessageDialog(frm, "사용자 상태가 수정되었습니다.", "Message", JOptionPane.INFORMATION_MESSAGE, null);
 					
 					frm.dispose();
-					adminController.showView();
+					try {
+						adminController.showView();
+					} catch (AdminException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
 				}
 			});
     	}
@@ -77,12 +104,6 @@ public class AdminTableCell extends AbstractCellEditor implements TableCellEdito
     		
     		return deleteBtn;
     	}else {
-    		/*AdminController adminController = new AdminController();
-    		User user;
-    		
-    		user = adminController.select(row);
-    		
-    		stateBox.setSelectedItem(user.getState());*/
     		
     		return stateBtn;
     	}
@@ -95,12 +116,6 @@ public class AdminTableCell extends AbstractCellEditor implements TableCellEdito
     		
     		return deleteBtn;
     	}else {
-    		/*AdminController adminController = new AdminController();
-    		User user;
-    		
-    		user = adminController.select(row);
-    		
-    		stateBox.setSelectedItem(user.getState());*/
     		
     		return stateBtn;
     	}
