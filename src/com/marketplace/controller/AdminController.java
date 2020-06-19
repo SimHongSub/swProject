@@ -3,13 +3,26 @@ package com.marketplace.controller;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import com.marketplace.exception.AdminException;
 import com.marketplace.filesystem.FileProcessing;
 import com.marketplace.model.Book;
 import com.marketplace.model.User;
 import com.marketplace.view.Admin;
 
-public class AdminController {
-
+/** 
+ * Class responsible for admin page backend logic.
+ * 
+ * @date 2020.06.12
+ * @author SimHongSub
+ * @version 1.0
+ */
+public class AdminController{
+	/**
+	 * view - Admin view object.
+	 * userList - List to saved user object.
+	 * bookList - List to saved book object.
+	 * fp - FileProcessing object to read file.
+	 */
 	private Admin view;
 	private ArrayList<User> userList;
 	private ArrayList<Book> bookList;
@@ -25,89 +38,136 @@ public class AdminController {
 		fp.readBookFile("bookInfo", bookList);
 	}
 	
-	public void showView() {
-		view.show(userList);
+	/**
+	 * Method showing the view.
+	 */
+	public void showView() throws AdminException{
+		try {
+			view.show(userList);
+		}catch (Exception e) {
+			new AdminException("Admin Controller showView() method exception.");
+		}
 	}
 	
-	public User select(int index) {
-		return userList.get(index);
+	/**
+	 * Method to return the selected User.
+	 * 
+	 * @param index - userList index.
+	 * @return User
+	 */
+	public User select(int index) throws AdminException {
+		try {
+			return userList.get(index);
+		}catch (Exception e) {
+			new AdminException("Admin Controller select() method exception.");
+			
+			return null;
+		}
 	}
 	
-	public void modify(int index) {
-		if(userList.get(index).getState().equals("activated")) {
-			userList.get(index).setState("deactivated");
-		}else {
-			userList.get(index).setState("activated");
+	/**
+	 * Method to modify the user state.
+	 * 
+	 * @param index - userList index.
+	 */
+	public void modify(int index) throws AdminException {
+		try {
+			if(userList.get(index).getState().equals("activated")) {
+				userList.get(index).setState("deactivated");
+			}else {
+				userList.get(index).setState("activated");
+			}
+			
+			fp.writeUserFile(userList, "userInfo");
+		}catch (Exception e) {
+			new AdminException("Admin Controller modify() method exception.");
 		}
 		
-		fp.writeUserFile(userList, "userInfo");
 	}
 	
-	public void search(String searchItem, String searchText) {
+	/**
+	 * Method to search for users related to input information.
+	 * 
+	 * @param searchItem - search item information.
+	 * @param searchText - search text information.
+	 */
+	public void search(String searchItem, String searchText) throws AdminException {
 		ArrayList<User> searchedUser = new ArrayList<User>();
-		
-		if(searchItem.equals("사용자ID")) {
-			for(int i=0; i<userList.size(); i++) {
-				User user = userList.get(i);
-				
-				if(user.getId().equals(searchText)) {
-					searchedUser.add(user);
+		try {
+			if(searchItem.equals("사용자ID")) {
+				for(int i=0; i<userList.size(); i++) {
+					User user = userList.get(i);
+					
+					if(user.getId().equals(searchText)) {
+						searchedUser.add(user);
+					}
+				}
+			}else {
+				for(int i=0; i<userList.size(); i++) {
+					User user = userList.get(i);
+					
+					if(user.getName().contains(searchText)) {
+						searchedUser.add(user);
+					}
 				}
 			}
-		}else {
-			for(int i=0; i<userList.size(); i++) {
-				User user = userList.get(i);
-				
-				if(user.getName().contains(searchText)) {
-					searchedUser.add(user);
-				}
-			}
+			
+			view.show(searchedUser);
+		}catch (Exception e) {
+			new AdminException("Admin Controller search() method exception.");
 		}
 		
-		view.show(searchedUser);
 	}
 	
-	public void delete(int index){
-		User deletedUser = userList.get(index);
-		
-		String userId = deletedUser.getId();
-		
-		for(int i=0; i<userList.size(); i++) {
-			User user = userList.get(i);
-			
-			if(userId.equals(user.getId())) {
-				userList.remove(i);
-				
-				break;
-			}
-		}
-		
-		fp.writeUserFile(userList, "userInfo");
-		
-		for(int i=0; i<bookList.size(); i++) {
-			Book book = bookList.get(i);
-			
-			if(userId.equals(book.getUserId())) {
-				bookList.remove(i);
-				i--;
-			}
-		}
-		
-		fp.writeBookFile(bookList, "bookInfo");
-	}
-	
-	public HashMap<String, String> checkState(int index){
+	/**
+	 * Method to delete selected user.
+	 * 
+	 * @param index - userList index.
+	 * @return HashMap<String, String>
+	 */
+	public HashMap<String, String> delete(int index) throws AdminException{
 		HashMap<String, String> result = new HashMap<String, String>();
 		User deletedUser = userList.get(index);
 		
-		String userState = deletedUser.getState();
-		
-		if(userState.equals("activated")) {
-			result.put("message", "fail");
-		}else {
-			result.put("message", "success");
+		try {
+			if(deletedUser.getState().equals("deactivated")) {
+				String userId = deletedUser.getId();
+				
+				for(int i=0; i<userList.size(); i++) {
+					User user = userList.get(i);
+					
+					if(userId.equals(user.getId())) {
+						userList.remove(i);
+						
+						break;
+					}
+				}
+				
+				fp.writeUserFile(userList, "userInfo");
+				
+				for(int i=0; i<bookList.size(); i++) {
+					Book book = bookList.get(i);
+					
+					if(userId.equals(book.getUserId())) {
+						bookList.remove(i);
+						i--;
+					}
+				}
+				
+				fp.writeBookFile(bookList, "bookInfo");
+				
+				result.put("message", "success");
+			}else {
+				result.put("message", "fail");
+			}
+			
+			return result;
+		}catch (Exception e) {
+			new AdminException("Admin Controller delete() method exception.");
+			
+			return null;
 		}
 		
-		return result;
+		
 	}
 }
