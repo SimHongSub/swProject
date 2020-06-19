@@ -9,6 +9,7 @@ import org.junit.Test;
 import org.junit.runners.MethodSorters;
 
 import com.marketplace.controller.SignUpController;
+import com.marketplace.exception.SignUpException;
 
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class SignUpControllerTest {
@@ -21,7 +22,11 @@ public class SignUpControllerTest {
 	
 	@Test
 	public void test1ShowView() {
-		signUpController.showView();
+		try {
+			signUpController.showView();
+		} catch (SignUpException e) {
+			e.printStackTrace();
+		}
 	}
 
 	@Test
@@ -29,7 +34,11 @@ public class SignUpControllerTest {
 		HashMap<String, String> result = new HashMap<String, String>();
 		result.put("message", "success");
 		
-		assertEquals(result, signUpController.enrollment("unitTest", "123", "유닛테스트", "55555555", "unit@test.com"));
+		try {
+			assertEquals(result, signUpController.enrollment("unitTest", "123", "유닛테스트", "55555555", "unit@test.com"));
+		} catch (SignUpException e) {
+			e.printStackTrace();
+		}
 	}
 
 }
