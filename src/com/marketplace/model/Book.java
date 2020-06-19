@@ -1,6 +1,23 @@
 package com.marketplace.model;
 
+/** 
+ * Model class responsible for save the book information.
+ * 
+ * @date 2020.06.12
+ * @author SimHongSub
+ * @version 1.0
+ */
 public class Book {
+	/**
+	 * isbn - 책 ISBN 넘버
+	 * title - 책 제목
+	 * author - 저자
+	 * publisher - 출판사
+	 * date - 출판년도
+	 * state - 상태(Excellent. Good, Fair)
+	 * price - 가격
+	 * userId - 주인 id
+	 */
 	private String isbn;
 	private String title;
 	private String author;
