@@ -22,9 +22,10 @@ import com.marketplace.model.User;
  */
 public class FileProcessing {
 	/**
-	 * Return fileContents after read c source file and save the content.
-	 * 
-	 * @return fileContents
+	 * Save user information after read userInfo file.
+	 
+	 * @param filePath - Input file path
+	 * @param list - User object list
 	 * @throws IOException 
 	 * @exception FileInputStream Exception.
 	 */
@@ -56,9 +57,10 @@ public class FileProcessing {
 	}
 	
 	/**
-	 * Return fileContents after read c source file and save the content.
-	 * 
-	 * @return fileContents
+	 * Save book information after read bookInfo file.
+	 
+	 * @param filePath - Input file path
+	 * @param list - Book object list
 	 * @throws IOException 
 	 * @exception FileInputStream Exception.
 	 */
@@ -90,44 +92,9 @@ public class FileProcessing {
 	}
 	
 	/**
-	 * Return fileContents after read c source file and save the content.
-	 * 
-	 * @return fileContents
-	 * @throws IOException 
-	 * @exception FileInputStream Exception.
-	 */
-	/*public String readFile(String filePath) {
-		String fileContents = "";
-		FileInputStream fileStream = null;
-		
-		try {
-			fileStream = new FileInputStream(filePath);
-		} catch (FileNotFoundException e) {
-			
-			e.printStackTrace();
-		}
-		
-		try {
-			byte[] readBuffer = new byte[fileStream.available()];
-			
-			while(fileStream.read(readBuffer) != -1) {
-				fileContents += new String(readBuffer);
-			}
-			
-			fileStream.close();
-			
-			return fileContents;
-		}catch(Exception e) {
-			e.getStackTrace();
-			
-			return e.getMessage();
-		}
-	}*/
-	
-	/**
 	 * The method to write user info to file.
 	 * 
-	 * @param list - User info list
+	 * @param list - User object list
 	 * @param filePath - Output file path
 	 * @exception IOException.
 	 */
@@ -152,7 +119,7 @@ public class FileProcessing {
 	/**
 	 * The method to write book info to file.
 	 * 
-	 * @param list - Book info list
+	 * @param list - Book object list
 	 * @param filePath - Output file path
 	 * @exception IOException.
 	 */
@@ -173,10 +140,4 @@ public class FileProcessing {
 			e.printStackTrace();
 		}
 	}
-	
-	/*private void parsing(String line) {
-		String[] pieces = line.split(":");
-		
-		return pieces
-	}*/
 }
