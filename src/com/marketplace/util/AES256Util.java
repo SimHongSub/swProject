@@ -9,20 +9,22 @@ import javax.crypto.spec.IvParameterSpec;
 import javax.crypto.spec.SecretKeySpec;
 import org.apache.commons.codec.binary.Base64;
 
-/**
- * 양방향 암호화 알고리즘인 AES256 암호화를 지원하는 클래스
+/** 
+ * Class that supports AES256 encryption.
+ * 
+ * @date 2020.06.12
+ * @author SimHongSub
+ * @version 1.0
  */
 public class AES256Util {
 	private String iv;
 	private Key keySpec;
 
 	/**
-	 * 16자리의 키값을 입력하여 객체를 생성한다.
+	 * Create an object by entering a 16-digit key value.
 	 * 
-	 * @param key
-	 *            암/복호화를 위한 키값
+	 * @param key - Key value for encryption/decryption
 	 * @throws UnsupportedEncodingException
-	 *             키값의 길이가 16이하일 경우 발생
 	 */
 	final static String key = "usedbookmarketplaceproject";
 
@@ -41,11 +43,10 @@ public class AES256Util {
 	}
 
 	/**
-	 * AES256 으로 암호화 한다.
+	 * Encrypt with AES256.
 	 * 
-	 * @param str
-	 *            암호화할 문자열
-	 * @return
+	 * @param str - String to be encrypted
+	 * @return String
 	 * @throws NoSuchAlgorithmException
 	 * @throws GeneralSecurityException
 	 * @throws UnsupportedEncodingException
@@ -60,11 +61,10 @@ public class AES256Util {
 	}
 
 	/**
-	 * AES256으로 암호화된 txt 를 복호화한다.
+	 * Decrypt txt encrypted with AES256.
 	 * 
-	 * @param str
-	 *            복호화할 문자열
-	 * @return
+	 * @param str - String to decrypt
+	 * @return String
 	 * @throws NoSuchAlgorithmException
 	 * @throws GeneralSecurityException
 	 * @throws UnsupportedEncodingException
