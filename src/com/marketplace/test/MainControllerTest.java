@@ -9,6 +9,7 @@ import org.junit.Test;
 import org.junit.runners.MethodSorters;
 
 import com.marketplace.controller.MainController;
+import com.marketplace.exception.MainException;
 import com.marketplace.main.MarketPlace;
 import com.marketplace.model.User;
 
@@ -25,7 +26,11 @@ public class MainControllerTest {
 	
 	@Test
 	public void test1ShowView() {
-		mainController.showView();
+		try {
+			mainController.showView();
+		} catch (MainException e) {
+			e.printStackTrace();
+		}
 	}
 	
 	@Test
@@ -34,12 +39,20 @@ public class MainControllerTest {
 		result.put("message", "구매자 unitTest E-mail : unit@test.com\n"
 				+ "판매자 testid E-mail : test@naver.com\n메일이 발송되었습니다.");
 		
-		assertEquals(result, mainController.purchase(1));
+		try {
+			assertEquals(result, mainController.purchase(1));
+		} catch (MainException e) {
+			e.printStackTrace();
+		}
 	}
 	
 	@Test
 	public void test3Delete() {
-		mainController.delete(0);
+		try {
+			mainController.delete(0);
+		} catch (MainException e) {
+			e.printStackTrace();
+		}
 	}
 
 }
