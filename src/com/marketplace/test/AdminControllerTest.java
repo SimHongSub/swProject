@@ -49,8 +49,11 @@ public class AdminControllerTest {
 	
 	@Test
 	public void test4Modify() {
+		HashMap<String, String> result = new HashMap<String, String>();
+		result.put("message", "success");
+		
 		try {
-			adminController.modify(3);
+			assertEquals(result, adminController.modify(3));
 		} catch (AdminException e) {
 			e.printStackTrace();
 		}
