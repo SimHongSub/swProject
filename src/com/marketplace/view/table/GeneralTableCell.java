@@ -49,7 +49,6 @@ public class GeneralTableCell extends AbstractCellEditor implements TableCellEdi
 					try {
 						selectedBook = generalController.select(table.getSelectedRow());
 					} catch (GeneralException e1) {
-						// TODO Auto-generated catch block
 						e1.printStackTrace();
 					}
 					
@@ -73,7 +72,7 @@ public class GeneralTableCell extends AbstractCellEditor implements TableCellEdi
 					JTextField dateText = new JTextField(selectedBook.getDate());
 					
 					JLabel stateLabel = new JLabel("상태", SwingConstants.RIGHT);
-					String states[] = {"Excellent", "Good", "Fail"};
+					String states[] = {"Excellent", "Good", "Fair"};
 					JComboBox<String> stateBox = new JComboBox<String>(states);
 					if(selectedBook.getState().equals("Excellent")){
 						stateBox.setSelectedIndex(0);
@@ -97,7 +96,6 @@ public class GeneralTableCell extends AbstractCellEditor implements TableCellEdi
 							try {
 								result = generalController.modify(table.getSelectedRow(), titleText.getText(), authorText.getText(), publisherText.getText(), dateText.getText(), stateBox.getSelectedItem().toString(), priceText.getText());
 							} catch (GeneralException e1) {
-								// TODO Auto-generated catch block
 								e1.printStackTrace();
 							}
 						
@@ -109,7 +107,6 @@ public class GeneralTableCell extends AbstractCellEditor implements TableCellEdi
 								try {
 									generalController.showView();
 								} catch (GeneralException e1) {
-									// TODO Auto-generated catch block
 									e1.printStackTrace();
 								}
 							}else {
@@ -173,7 +170,6 @@ public class GeneralTableCell extends AbstractCellEditor implements TableCellEdi
 	    					frm.dispose();
 	    					generalController.showView();
 						} catch (GeneralException e1) {
-							// TODO Auto-generated catch block
 							e1.printStackTrace();
 						}
     				}

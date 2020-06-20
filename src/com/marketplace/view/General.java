@@ -92,7 +92,6 @@ public class General {
 					try {
 						generalController.search(searchBox.getSelectedItem().toString(), searchText.getText());
 					} catch (GeneralException e1) {
-						// TODO Auto-generated catch block
 						e1.printStackTrace();
 					}	
 				}else {
@@ -100,7 +99,6 @@ public class General {
 					try {
 						generalController.showView();
 					} catch (GeneralException e1) {
-						// TODO Auto-generated catch block
 						e1.printStackTrace();
 					}
 				}
@@ -134,7 +132,7 @@ public class General {
 				JTextField dateText = new JTextField();
 				
 				JLabel stateLabel = new JLabel("상태", SwingConstants.RIGHT);
-				String states[] = {"Excellent", "Good", "Fail"};
+				String states[] = {"Excellent", "Good", "Fair"};
 				JComboBox<String> stateBox = new JComboBox<String>(states);
 				
 				JLabel priceLabel = new JLabel("가격", SwingConstants.RIGHT);
@@ -151,7 +149,6 @@ public class General {
 						try {
 							result = generalController.register(titleText.getText(), authorText.getText(), publisherText.getText(), dateText.getText(), stateBox.getSelectedItem().toString(), priceText.getText());
 						} catch (GeneralException e1) {
-							// TODO Auto-generated catch block
 							e1.printStackTrace();
 						}
 					
@@ -163,7 +160,6 @@ public class General {
 							try {
 								generalController.showView();
 							} catch (GeneralException e1) {
-								// TODO Auto-generated catch block
 								e1.printStackTrace();
 							}
 						}else {
@@ -220,7 +216,6 @@ public class General {
 				try {
 					mainController.showView();
 				} catch (MainException e1) {
-					// TODO Auto-generated catch block
 					e1.printStackTrace();
 				}
 			}
