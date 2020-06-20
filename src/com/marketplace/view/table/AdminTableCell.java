@@ -70,22 +70,28 @@ public class AdminTableCell extends AbstractCellEditor implements TableCellEdito
 				
 				@Override
 				public void actionPerformed(ActionEvent e) {
+					HashMap<String, String> result = new HashMap<String, String>();
 					AdminController adminController = new AdminController();
+					
 					try {
-						adminController.modify(table.getSelectedRow());
+						result = adminController.modify(table.getSelectedRow());
 					} catch (AdminException e1) {
 						// TODO Auto-generated catch block
 						e1.printStackTrace();
 					}
 					
-					JOptionPane.showMessageDialog(frm, "사용자 상태가 수정되었습니다.", "Message", JOptionPane.INFORMATION_MESSAGE, null);
-					
-					frm.dispose();
-					try {
-						adminController.showView();
-					} catch (AdminException e1) {
-						// TODO Auto-generated catch block
-						e1.printStackTrace();
+					if(result.get("message").equals("success")) {
+						JOptionPane.showMessageDialog(frm, "사용자 상태가 수정되었습니다.", "Message", JOptionPane.INFORMATION_MESSAGE, null);
+						
+						frm.dispose();
+						try {
+							adminController.showView();
+						} catch (AdminException e1) {
+							// TODO Auto-generated catch block
+							e1.printStackTrace();
+						}
+					}else {
+						JOptionPane.showMessageDialog(frm, "관리자 계정 정보는 수정할 수 없습니다.", "Message", JOptionPane.INFORMATION_MESSAGE, null);
 					}
 				}
 			});
