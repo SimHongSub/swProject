@@ -70,19 +70,32 @@ public class AdminController{
 	 * 
 	 * @param index - userList index.
 	 */
-	public void modify(int index) throws AdminException {
+	public HashMap<String, String> modify(int index) throws AdminException {
+		HashMap<String, String> result = new HashMap<String, String>();
+		
 		try {
 			if(userList.get(index).getState().equals("activated")) {
-				userList.get(index).setState("deactivated");
+				if(userList.get(index).getId().equals("admin")) {
+					result.put("message", "fail");
+				}else {
+					userList.get(index).setState("deactivated");
+					
+					result.put("message", "success");
+				}
 			}else {
 				userList.get(index).setState("activated");
+				
+				result.put("message", "success");
 			}
 			
 			fp.writeUserFile(userList, "userInfo");
+			
+			return result;
 		}catch (Exception e) {
 			new AdminException("Admin Controller modify() method exception.");
+			
+			return null;
 		}
-		
 	}
 	
 	/**
