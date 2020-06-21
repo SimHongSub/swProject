@@ -88,7 +88,6 @@ public class Admin {
 					try {
 						adminController.search(searchBox.getSelectedItem().toString(), searchText.getText());
 					} catch (AdminException e1) {
-						// TODO Auto-generated catch block
 						e1.printStackTrace();
 					}	
 				}else {
@@ -96,7 +95,6 @@ public class Admin {
 					try {
 						adminController.showView();
 					} catch (AdminException e1) {
-						// TODO Auto-generated catch block
 						e1.printStackTrace();
 					}
 				}
@@ -116,7 +114,6 @@ public class Admin {
 				try {
 					mainController.showView();
 				} catch (MainException e1) {
-					// TODO Auto-generated catch block
 					e1.printStackTrace();
 				}
 			}

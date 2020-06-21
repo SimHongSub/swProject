@@ -44,7 +44,6 @@ public class AdminTableCell extends AbstractCellEditor implements TableCellEdito
 						try {
 							result = adminController.delete(table.getSelectedRow());
 						} catch (AdminException e1) {
-							// TODO Auto-generated catch block
 							e1.printStackTrace();
 						}
 						
@@ -55,7 +54,6 @@ public class AdminTableCell extends AbstractCellEditor implements TableCellEdito
 							try {
 								adminController.showView();
 							} catch (AdminException e1) {
-								// TODO Auto-generated catch block
 								e1.printStackTrace();
 							}
 						}else {
@@ -76,7 +74,6 @@ public class AdminTableCell extends AbstractCellEditor implements TableCellEdito
 					try {
 						result = adminController.modify(table.getSelectedRow());
 					} catch (AdminException e1) {
-						// TODO Auto-generated catch block
 						e1.printStackTrace();
 					}
 					
@@ -87,7 +84,6 @@ public class AdminTableCell extends AbstractCellEditor implements TableCellEdito
 						try {
 							adminController.showView();
 						} catch (AdminException e1) {
-							// TODO Auto-generated catch block
 							e1.printStackTrace();
 						}
 					}else {

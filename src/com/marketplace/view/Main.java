@@ -88,7 +88,6 @@ public class Main {
 					try {
 						mainController.search(searchBox.getSelectedItem().toString(), searchText.getText());
 					} catch (MainException e1) {
-						// TODO Auto-generated catch block
 						e1.printStackTrace();
 					}	
 				}else {
@@ -96,7 +95,6 @@ public class Main {
 					try {
 						mainController.showView();
 					} catch (MainException e1) {
-						// TODO Auto-generated catch block
 						e1.printStackTrace();
 					}
 				}
@@ -117,7 +115,6 @@ public class Main {
 					try {
 						adminController.showView();
 					} catch (AdminException e1) {
-						// TODO Auto-generated catch block
 						e1.printStackTrace();
 					}
 				}
@@ -136,7 +133,6 @@ public class Main {
 					try {
 						generalController.showView();
 					} catch (GeneralException e1) {
-						// TODO Auto-generated catch block
 						e1.printStackTrace();
 					}
 				}
