@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 import com.marketplace.exception.AdminException;
-import com.marketplace.filesystem.FileProcessing;
 import com.marketplace.model.Book;
 import com.marketplace.model.User;
 import com.marketplace.view.Admin;
@@ -16,26 +15,14 @@ import com.marketplace.view.Admin;
  * @author SimHongSub
  * @version 1.0
  */
-public class AdminController{
+public class AdminController extends Controller{
 	/**
 	 * view - Admin view object.
-	 * userList - List to saved user object.
-	 * bookList - List to saved book object.
-	 * fp - FileProcessing object to read file.
 	 */
 	private Admin view;
-	private ArrayList<User> userList;
-	private ArrayList<Book> bookList;
-	private FileProcessing fp;
 	
 	public AdminController() {
 		view = new Admin();
-		userList = new ArrayList<User>();
-		bookList = new ArrayList<Book>();
-		fp = new FileProcessing();
-		
-		fp.readUserFile("userInfo", userList);
-		fp.readBookFile("bookInfo", bookList);
 	}
 	
 	/**

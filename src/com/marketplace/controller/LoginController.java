@@ -2,11 +2,9 @@ package com.marketplace.controller;
 
 import java.io.UnsupportedEncodingException;
 import java.security.GeneralSecurityException;
-import java.util.ArrayList;
 import java.util.HashMap;
 
 import com.marketplace.exception.LoginException;
-import com.marketplace.filesystem.FileProcessing;
 import com.marketplace.main.MarketPlace;
 import com.marketplace.model.User;
 import com.marketplace.util.AES256Util;
@@ -19,22 +17,14 @@ import com.marketplace.view.Login;
  * @author SimHongSub
  * @version 1.0
  */
-public class LoginController {
+public class LoginController extends Controller {
 	/**
 	 * view - General view object.
-	 * userList - List to saved user object.
-	 * fp - FileProcessing object to read file.
 	 */
 	private Login view;
-	private ArrayList<User> userList;
-	private FileProcessing fp;
 	
 	public LoginController() {
 		view = new Login();
-		userList = new ArrayList<User>();
-		fp = new FileProcessing();
-		
-		fp.readUserFile("userInfo", userList);
 	}
 	
 	/**

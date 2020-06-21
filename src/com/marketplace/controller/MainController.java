@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 import com.marketplace.exception.MainException;
-import com.marketplace.filesystem.FileProcessing;
 import com.marketplace.model.Book;
 import com.marketplace.model.User;
 import com.marketplace.util.EmailUtil;
@@ -17,26 +16,14 @@ import com.marketplace.view.Main;
  * @author SimHongSub
  * @version 1.0
  */
-public class MainController {
+public class MainController extends Controller {
 	/**
 	 * view - General view object.
-	 * userList - List to saved user object.
-	 * bookList - List to saved book object.
-	 * fp - FileProcessing object to read file.
 	 */
 	private Main view;
-	private ArrayList<Book> bookList;
-	private ArrayList<User> userList;
-	private FileProcessing fp;
 	
 	public MainController() {
 		view = new Main();
-		bookList = new ArrayList<Book>();
-		userList = new ArrayList<User>();
-		fp = new FileProcessing();
-		
-		fp.readBookFile("bookInfo", bookList);
-		fp.readUserFile("userInfo", userList);
 	}
 	
 	/**

@@ -2,11 +2,9 @@ package com.marketplace.controller;
 
 import java.io.UnsupportedEncodingException;
 import java.security.GeneralSecurityException;
-import java.util.ArrayList;
 import java.util.HashMap;
 
 import com.marketplace.exception.SignUpException;
-import com.marketplace.filesystem.FileProcessing;
 import com.marketplace.model.User;
 import com.marketplace.util.AES256Util;
 import com.marketplace.view.SignUp;
@@ -18,22 +16,14 @@ import com.marketplace.view.SignUp;
  * @author SimHongSub
  * @version 1.0
  */
-public class SignUpController {
+public class SignUpController extends Controller {
 	/**
 	 * view - General view object.
-	 * userList - List to saved user object.
-	 * fp - FileProcessing object to read file.
 	 */
 	private SignUp view;
-	private ArrayList<User> userList;
-	private FileProcessing fp;
 	
 	public SignUpController() {
 		view = new SignUp();
-		userList = new ArrayList<User>();
-		fp = new FileProcessing();
-		
-		fp.readUserFile("userInfo", userList);
 	}
 	
 	/**
