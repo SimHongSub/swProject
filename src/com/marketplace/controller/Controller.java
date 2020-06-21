@@ -13,7 +13,7 @@ import com.marketplace.model.User;
  * @author SimHongSub
  * @version 1.0
  */
-public class Controller {
+public abstract class Controller {
 	/**
 	 * userList - List to saved user object.
 	 * bookList - List to saved book object.
@@ -31,4 +31,6 @@ public class Controller {
 		fp.readUserFile("userInfo", userList);
 		fp.readBookFile("bookInfo", bookList);
 	}
+	
+	public abstract void showView() throws Exception;
 }
