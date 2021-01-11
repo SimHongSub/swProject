@@ -49,7 +49,7 @@ AdminException Class : 관리자 페이지 기능과 관련된 exception 을 담
 헌책 장터 시스템의 File I/O 관련 Class 들을 모아놓은 package 이다.  
 FileProcessing Class : File I/O 를 담당하는 Class 이다.  
 
-###com.marketplace.util package
+### com.marketplace.util package
 헌책 장터 시스템의 외부 서비스 관련 Class 들을 모아놓은 package 이다.  
 AES256Util Class : 비밀번호 암호화를 담당하는 Class 이다.  
 EmailUtil Class : E-mail 서비스를 담당하는 Class 이다.  
